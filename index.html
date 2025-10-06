@@ -232,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
     promiseBox.style.display = 'block';
   });
 
+  // Botón para reproducir/pausar música
   musicBtn.addEventListener('click', () => {
     if (musicPlayer.paused) {
       musicPlayer.play().catch(e => console.log('Error al reproducir:', e));
@@ -240,14 +241,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  document.addEventListener('click', function iniciarMusica() {
+  // Reproducción segura al primer click en cualquier parte
+  function iniciarMusicaSeguro() {
     if (musicPlayer.paused) {
-      musicPlayer.play().catch(e => console.log('Error al reproducir automáticamente:', e));
+      musicPlayer.play().then(() => {
+        console.log('Música iniciada correctamente');
+      }).catch(e => console.log('No se pudo reproducir la música automáticamente:', e));
     }
-    document.removeEventListener('click', iniciarMusica);
-  });
+    document.removeEventListener('click', iniciarMusicaSeguro);
+  }
 
-  // Crear estrellas flotantes por toda la pantalla con parpadeo aleatorio
+  document.addEventListener('click', iniciarMusicaSeguro);
+
+  // Crear estrellas flotantes
   function crearEstrellas() {
     const total = 100;
     const screenWidth = window.innerWidth;
@@ -262,21 +268,8 @@ document.addEventListener('DOMContentLoaded', () => {
       star.style.top = Math.random() * screenHeight + 'px';
 
       const floatDuration = 5 + Math.random()*10;
-      const twinkleDuration = 1 + Math.random()*3;
-      const twinkleDelay = Math.random()*5;
+      co
 
-      star.style.animation = `floatStar ${floatDuration}s linear infinite, twinkle ${twinkleDuration}s ease-in-out ${twinkleDelay}s infinite alternate`;
-
-      document.body.appendChild(star);
-    }
-  }
-
-  crearEstrellas();
-});
-</script>
-
-</body>
-</html>
 
 
 
